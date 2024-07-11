@@ -25,17 +25,16 @@ class MRUCache(BaseCaching):
         if key is None or item is None:
             return
 
-        # Moves the key corresponding key in self.cache_data to the end of
-        # dictionary if the item exists exists
         if key in self.cache_data:
             self.cache_data.move_to_end(key)
-        self.cache_data[key] = item
+        else:
 
-        if len(self.cache_data) > BaseCaching.MAX_ITEMS:
-            # Discard the first item put in cache (LIFO algorithm)
-            most_recent_key = list(self.cache_data.keys())[-1]
-            print("DISCARD: {}".format(most_recent_key))
-            del self.cache_data[most_recent_key]
+            if len(self.cache_data) >= BaseCaching.MAX_ITEMS:
+                # Discard the first item put in cache (LIFO algorithm)
+                most_recent_key = list(self.cache_data.keys())[-1]
+                print("DISCARD: {}".format(most_recent_key))
+                del self.cache_data[most_recent_key]
+        self.cache_data[key] = item
 
     def get(self, key):
         """Get an item by key"""
