@@ -31,7 +31,7 @@ class MRUCache(BaseCaching):
             self.cache_data.move_to_end(key)
         self.cache_data[key] = item
 
-        if len(self.cache_data) >= BaseCaching.MAX_ITEMS:
+        if len(self.cache_data) > BaseCaching.MAX_ITEMS:
             # Discard the first item put in cache (LIFO algorithm)
             most_recent_key = list(self.cache_data.keys())[-1]
             print("DISCARD: {}".format(most_recent_key))
